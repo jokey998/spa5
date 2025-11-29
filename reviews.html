@@ -1,0 +1,261 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>美容師心得評價 | 波波舒壓會館</title>
+    <meta name="description" content="查看波波會館美容師的服務心得與評價。林森北路最真實的半套按摩體驗分享。" />
+    <meta name="robots" content="noindex"> 
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.jpg" type="image/jpeg" sizes="640x640">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    <style>
+        /* 心得頁面專屬排版樣式 */
+        .review-layout-container {
+            display: flex;
+            flex-direction: column-reverse; /* 手機版：照片在下，文字在上，或是照片在上看喜好，這裡設定 column-reverse 讓手機版照片在上方(因HTML結構照片在後) */
+            gap: 30px;
+            align-items: flex-start;
+        }
+
+        .review-text-area {
+            flex: 2;
+            width: 100%;
+        }
+
+        .review-image-area {
+            flex: 1;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .profile-photo {
+            width: 100%;
+            max-width: 400px; /* 稍微放寬最大寬度 */
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: 5px solid #fff;
+            
+            /* --- 關鍵修改：讓照片完整顯示不裁切 --- */
+            object-fit: contain; /* 確保圖片完整顯示 */
+            height: auto;        /* 高度自動，依照比例縮放 */
+            /* 移除 aspect-ratio: 1/1 以免強制正方形 */
+            
+            background-color: #f0f0f0;
+            transition: transform 0.3s;
+        }
+
+        .profile-photo:hover {
+            transform: scale(1.02);
+        }
+
+        /* 電腦版排版：左右並排 */
+        @media (min-width: 768px) {
+            .review-layout-container {
+                flex-direction: row; /* 左文右圖 */
+            }
+            /* 如果想要圖片緊貼頂部，可以調整 align-items */
+        }
+        
+        /* 手機版調整 */
+        @media (max-width: 767px) {
+            .review-layout-container {
+                flex-direction: column; /* 手機版：圖在上文在下 */
+            }
+            .review-image-area {
+                order: -1; /* 強制圖片區塊排在最上面 */
+                margin-bottom: 10px;
+            }
+            .profile-photo {
+                max-width: 100%; /* 手機版寬度佔滿 */
+                max-height: 500px; /* 限制最大高度以免佔據整個手機螢幕 */
+            }
+        }
+    </style>
+</head>
+<body class="contact">
+
+    <header>
+        <h1>波波會館(台北中山林森五木 半套按摩舒壓紓壓)</h1>
+        <nav>
+            <div class="nav-item-dropdown">
+                <a href="guide.html" class="nav-btn">新手指南 ▾</a>
+                <div class="dropdown-content">
+                    <a href="guide_terms.html">術語解析</a>
+                    <a href="guide_flow.html">服務流程</a>
+                    <a href="guide_techniques.html">進階技巧</a>
+                </div>
+            </div>
+            <div class="nav-item-dropdown">
+                <a href="faq.html" class="nav-btn">常見問題 ▾</a>
+                <div class="dropdown-content">
+                    <a href="faq_scams.html">防詐騙專區</a>
+                    <a href="faq_safety.html">安全與消費</a>
+                </div>
+            </div>
+            <div class="nav-item-dropdown">
+                <a href="booking.html" class="nav-btn">如何約紅牌 ▾</a>
+                <div class="dropdown-content">
+                    <a href="booking_intro.html">新手入門</a>
+                    <a href="booking_price.html">價格與規則</a>
+                    <a href="booking_tips.html">挑選秘訣</a>
+                </div>
+            </div>
+            <a href="index.html" class="logo-button">
+                <img src="logo.jpg" alt="波波會館 Logo" class="nav-logo">
+            </a>
+            <a href="schedule.html" class="nav-highlight">📅 班表</a>
+            <div class="nav-item-dropdown">
+                <a href="about_us.html" class="nav-btn">為何選擇我們 ▾</a>
+                <div class="dropdown-content">
+                    <a href="about_comparison.html">市場比較</a>
+                    <a href="about_services.html">服務差異</a>
+                    <a href="about_beauticians.html">人員介紹</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-btn">預約/現場接待</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        <div style="text-align: center; margin-bottom: 30px;">
+            <a href="schedule.html" class="back-nav-btn"><span>←</span> 返回班表</a>
+        </div>
+
+        <div class="review-layout-container">
+            <!-- 左側：文字心得區 -->
+            <div class="review-text-area">
+                <h2 id="girl-name-title" style="border-bottom: none; text-align: left; margin-bottom: 15px;">美容師心得</h2>
+                
+                <div class="highlight-box" style="text-align: left; padding: 30px 25px; margin-top: 0;">
+                    <div id="review-content" style="font-size: 1.1em; color: #444; line-height: 1.8;">資料載入中...</div>
+                    
+                    <!-- 調整後的提示文字區塊 -->
+                    <p style="margin-top: 40px; font-size: 1.5em; color: #d35400; border-top: 2px dashed #ccc; padding-top: 30px; text-align: center; font-weight: 800; line-height: 1.4;">
+                        想了解更多細節，請私訊波波！<br>
+                        <span style="font-size: 0.6em; font-weight: normal; color: #666; display: block; margin-top: 10px;">歡迎體驗後與波波分享您的寶貴心得！</span>
+                    </p>
+                </div>
+            </div>
+
+            <!-- 右側：照片區 -->
+            <div class="review-image-area">
+                <img id="girl-photo" src="" alt="美容師照片" class="profile-photo" onerror="this.src='logo.jpg'">
+            </div>
+        </div>
+
+        <section style="margin-top: 40px; border-top: 2px solid #eee; padding-top: 30px;">
+            <h3>直接預約此美容師</h3>
+            <p>心動了嗎？點擊下方按鈕立即預約！</p>
+            <div class="cta-group">
+                <a href="https://line.me/ti/p/~jokey98" class="brand-btn btn-line" target="_blank">
+                    <span style="margin-right: 10px;">💬</span> 預約詢問 Line: jokey98
+                </a>
+                
+                <a href="https://t.me/jokey998" class="brand-btn btn-tg" target="_blank">
+                    <span style="margin-right: 10px;">✈️</span> 預約詢問 Telegram: jokey998
+                </a>
+                
+                <a href="https://t.me/+GlJY15nX6lY3NmJl" class="brand-btn btn-channel" target="_blank">
+                    <span style="margin-right: 10px;">👀</span> TG班表頻道 (看妹請點我)
+                </a>
+
+                <a href="tel:0909079473" class="brand-btn btn-phone">
+                    <span style="margin-right: 10px;">📞</span> 電話預約: 0909079473
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-contact">
+            <div class="info-item signature">
+                <p>台妹舒壓放鬆詢問</p>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="label">Line:</span>
+                    <a href="https://line.me/ti/p/~jokey98" target="_blank" class="value">jokey98</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Telegram:</span>
+                    <a href="https://t.me/jokey998" target="_blank" class="value">jokey998</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Telegram班表頻道:</span>
+                    <a href="https://t.me/+GlJY15nX6lY3NmJl" target="_blank" class="value">波波會館🇹🇼本土台灣娛樂優選</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">電話:</span>
+                    <a href="tel:0909079473" class="value">0909079473</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 波波舒壓會館. 專業舒壓幹部為您把關。</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const name = params.get('name');
+            const titleEl = document.getElementById('girl-name-title');
+            const contentEl = document.getElementById('review-content');
+            const photoEl = document.getElementById('girl-photo'); // 獲取圖片元素
+            
+            if (!name) {
+                contentEl.textContent = "請先從班表選擇一位美容師。";
+                photoEl.style.display = "none"; // 沒有名字時隱藏圖片框
+                return;
+            }
+
+            document.title = `${name} - 美容師心得 | 波波舒壓會館`;
+            titleEl.textContent = `美容師【${name}】的服務心得`;
+            
+            // 設定圖片路徑
+            photoEl.src = `${name}.jpg`;
+            photoEl.alt = `${name} 照片`;
+
+            fetch('girls.json?v=' + new Date().getTime())
+                .then(response => {
+                    if (!response.ok) throw new Error("Network error");
+                    return response.json();
+                })
+                .then(data => {
+                    const girl = data.find(g => g.name === name);
+
+                    if (girl && girl.review) {
+                        // 判斷 review 是陣列(多心得) 還是 字串(單心得)
+                        if (Array.isArray(girl.review)) {
+                            let htmlContent = '<div class="reviews-container" style="text-align: left;">';
+                            girl.review.forEach((r, index) => {
+                                htmlContent += `
+                                    <div class="review-card" style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); border-left: 5px solid #e91e63;">
+                                        <div style="font-size: 1.1em;">${r}</div>
+                                    </div>
+                                `;
+                            });
+                            htmlContent += '</div>';
+                            contentEl.innerHTML = htmlContent;
+                        } else {
+                            // 舊格式：單一字串
+                            contentEl.innerHTML = girl.review;
+                            contentEl.style.fontSize = "1.2em";
+                        }
+                        contentEl.style.color = "#2c3e50";
+                    } else {
+                        contentEl.innerHTML = "目前暫無文字心得。<br>想了解更多細節，歡迎直接私訊波波！";
+                        contentEl.style.color = "#7f8c8d";
+                        contentEl.style.fontSize = "1.2em";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    contentEl.textContent = "無法載入心得資料，請稍後再試。";
+                });
+        });
+    </script>
+</body>
+</html>

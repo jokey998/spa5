@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://jokey998.github.io/bobospa/sitemap2.xml

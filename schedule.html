@@ -1,0 +1,423 @@
+
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>班表查詢 | 台北林森會館最新名單 | 台妹半套按摩價格</title>
+    <meta name="description" content="查看波波會館最新班表。台北按摩、紓壓會館首選，提供透明的美容師名單與價格。林森北路五木半套、按摩舒壓、台妹會館即時資訊，看到喜歡立即預約。" />
+    <meta name="keywords" content="林森會館,紓壓會館,按摩會館,台妹會館,舒壓按摩,五木半套,台北按摩,半套按摩,半套舒壓,按摩舒壓" />
+    <link rel="canonical" href="https://jokey998.github.io/bobospa/schedule.html" />
+    
+    <!-- Open Graph -->
+    <meta property="og:locale" content="zh_TW" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="班表查詢 - 波波舒壓會館 | 上班名單" />
+    <meta property="og:description" content="點擊查看今日及全部上班美容師名單與價格。台北中山區半套舒壓首選。" />
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:url" content="https://jokey998.github.io/bobospa/schedule.html" />
+
+    <!-- Schema.org Structural Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebPage",
+          "name": "班表查詢 - 波波舒壓會館",
+          "description": "台北林森北路按摩會館即時班表與價格資訊。",
+          "isPartOf": { "@id": "https://jokey998.github.io/bobospa/#website" }
+        },
+        {
+          "@type": "BreadcrumbList",
+          "itemListElement": [{
+            "@type": "ListItem",
+            "position": 1,
+            "name": "首頁",
+            "item": "https://jokey998.github.io/bobospa/index.html"
+          },{
+            "@type": "ListItem",
+            "position": 2,
+            "name": "班表",
+            "item": "https://jokey998.github.io/bobospa/schedule.html"
+          }]
+        }
+      ]
+    }
+    </script>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.jpg" type="image/jpeg" sizes="640x640">
+    <link rel="apple-touch-icon" href="logo.jpg">
+    
+    <style>
+        /* 美容師照片樣式 */
+        .beautician-img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.15);
+            display: block;
+            margin: 0 auto;
+            background-color: #f0f0f0;
+            cursor: zoom-in;
+            transition: transform 0.2s;
+        }
+
+        .beautician-img:hover {
+            transform: scale(1.1);
+        }
+        
+        /* 表格欄位寬度 */
+        #schedule-table th:first-child, 
+        #schedule-table td:first-child {
+            width: 130px;
+            text-align: center;
+        }
+
+        #schedule-table td {
+            vertical-align: middle;
+        }
+
+        /* 名字連結 */
+        .name-link {
+            color: #2980b9;
+            text-decoration: none;
+            font-size: 1.2em;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+
+        /* 標籤小徽章 */
+        .tag-badge {
+            display: inline-block;
+            background-color: #fce4ec;
+            color: #d81b60;
+            font-size: 0.8em;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 4px;
+            margin-bottom: 4px;
+        }
+        .tags-display {
+            margin-top: 5px;
+        }
+
+        /* --- 控制面板樣式 (Tabs & Filters) --- */
+        .control-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            font-weight: bold;
+            color: #666;
+            transition: all 0.3s;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .tab-btn:hover {
+            background-color: #f9f9f9;
+        }
+
+        .tab-btn.active {
+            color: #fff;
+            background-color: #2980b9;
+        }
+
+        .filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .filter-input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        
+        /* 標籤篩選器容器 */
+        .tag-filters-container {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag-filter {
+            cursor: pointer;
+            padding: 5px 10px;
+            background-color: #eee;
+            border-radius: 15px;
+            font-size: 0.9em;
+            color: #555;
+            transition: 0.2s;
+            border: 1px solid transparent;
+        }
+
+        .tag-filter:hover {
+            background-color: #ddd;
+        }
+
+        .tag-filter.active {
+            background-color: #e91e63;
+            color: white;
+            box-shadow: 0 2px 4px rgba(233, 30, 99, 0.4);
+        }
+
+        /* --- 燈箱 (Lightbox) 樣式 --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            padding-top: 20px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.95);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 98vw; 
+            max-height: 95vh;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            border-radius: 5px;
+            border: 1px solid #555;
+            animation-name: zoom;
+            animation-duration: 0.3s;
+        }
+
+        @keyframes zoom {
+            from {transform:scale(0)}
+            to {transform:scale(1)}
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 50px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+            z-index: 10000;
+            text-shadow: 0 0 5px #000;
+        }
+        
+        @media (max-width: 600px) {
+            .beautician-img {
+                width: 75px;
+                height: 75px;
+            }
+            #schedule-table th:first-child, 
+            #schedule-table td:first-child {
+                width: 90px;
+            }
+            .close {
+                top: 10px;
+                right: 20px;
+                font-size: 40px;
+            }
+            .filters {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body class="lounge-background">
+    <header>
+        <h1>波波會館(台北中山林森五木 半套按摩舒壓紓壓)</h1>
+        <nav>
+            <div class="nav-item-dropdown">
+                <a href="guide.html" class="nav-btn">新手指南 ▾</a>
+                <div class="dropdown-content">
+                    <a href="guide_terms.html">術語解析</a>
+                    <a href="guide_flow.html">服務流程</a>
+                    <a href="guide_techniques.html">進階技巧</a>
+                </div>
+            </div>
+            <div class="nav-item-dropdown">
+                <a href="faq.html" class="nav-btn">常見問題 ▾</a>
+                <div class="dropdown-content">
+                    <a href="faq_scams.html">防詐騙專區</a>
+                    <a href="faq_safety.html">安全與消費</a>
+                </div>
+            </div>
+            <div class="nav-item-dropdown">
+                <a href="booking.html" class="nav-btn">如何約紅牌 ▾</a>
+                <div class="dropdown-content">
+                    <a href="booking_intro.html">新手入門</a>
+                    <a href="booking_price.html">價格與規則</a>
+                    <a href="booking_tips.html">挑選秘訣</a>
+                </div>
+            </div>
+            <a href="index.html" class="logo-button">
+                <img src="logo.jpg" alt="波波會館 Logo" class="nav-logo">
+            </a>
+            <a href="schedule.html" class="nav-highlight">📅 班表</a>
+            <div class="nav-item-dropdown">
+                <a href="about_us.html" class="nav-btn">為何選擇我們 ▾</a>
+                <div class="dropdown-content">
+                    <a href="about_comparison.html">市場比較</a>
+                    <a href="about_services.html">服務差異</a>
+                    <a href="about_beauticians.html">人員介紹</a>
+                </div>
+            </div>
+            <a href="contact.html" class="nav-btn">預約/現場接待</a>
+        </nav>
+    </header>
+
+    <main class="content-page">
+        <!-- 控制面板 -->
+        <div class="control-panel">
+            <div class="tabs">
+                <div id="tab-today" class="tab-btn active">今日班表</div>
+                <div id="tab-all" class="tab-btn">全部班表</div>
+            </div>
+            
+            <div class="filters">
+                <input type="text" id="search-name" class="filter-input" placeholder="🔍 搜尋美容師名字..." style="flex: 2;">
+                
+                <select id="filter-day" class="filter-input" style="flex: 1;">
+                    <option value="all">所有時間</option>
+                    <option value="星期一">星期一</option>
+                    <option value="星期二">星期二</option>
+                    <option value="星期三">星期三</option>
+                    <option value="星期四">星期四</option>
+                    <option value="星期五">星期五</option>
+                    <option value="星期六">星期六</option>
+                    <option value="星期日">星期日</option>
+                </select>
+            </div>
+
+            <div class="tag-filters-container" id="filter-tags-container">
+                <!-- 標籤按鈕會由 JS 自動產生 -->
+            </div>
+        </div>
+
+        <h2 id="today-title">📅 今日班表載入中...</h2>
+        
+        <div id="no-schedule-message" class="hidden">
+            沒有符合條件的美容師資料。
+        </div>
+
+        <table id="schedule-table" class="hidden">
+            <thead>
+                <tr>
+                    <th>照片 (點擊放大)</th>
+                    <th>美容師 (查看心得)</th>
+                    <th>上班時間</th>
+                    <th>費用</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 內容由 JS 產生 -->
+            </tbody>
+        </table>
+
+        <section class="highlight-box" style="margin-top: 20px;">
+            <h3>💡 預約提醒</h3>
+            <p>班表僅供參考，實際狀況可能因美容師臨時請假或預約額滿而變動。建議看到喜歡的美容師，直接截圖私訊波波預約保留時段！<br>要看更多妹妹，歡迎加入Telegram班表群組</p>
+            
+            <div class="cta-group" style="margin-top: 20px;">
+                <a href="https://line.me/ti/p/~jokey98" class="brand-btn btn-line" target="_blank">
+                    <span style="margin-right: 10px;">💬</span> 預約詢問 Line: jokey98
+                </a>
+                
+                <a href="https://t.me/jokey998" class="brand-btn btn-tg" target="_blank">
+                    <span style="margin-right: 10px;">✈️</span> 預約詢問 Telegram: jokey998
+                </a>
+                
+                <a href="https://t.me/+GlJY15nX6lY3NmJl" class="brand-btn btn-channel" target="_blank">
+                    <span style="margin-right: 10px;">👀</span> TG班表頻道 (看妹請點我)
+                </a>
+
+                <a href="tel:0909079473" class="brand-btn btn-phone">
+                    <span style="margin-right: 10px;">📞</span> 電話預約: 0909079473
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- 燈箱 Modal -->
+    <div id="imageModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImg">
+    </div>
+
+    <footer>
+        <div class="footer-contact">
+            <div class="info-item signature">
+                <p>台妹舒壓放鬆詢問</p>
+            </div>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span class="label">Line:</span>
+                    <a href="https://line.me/ti/p/~jokey98" target="_blank" class="value">jokey98</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Telegram:</span>
+                    <a href="https://t.me/jokey998" target="_blank" class="value">jokey998</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">Telegram班表頻道:</span>
+                    <a href="https://t.me/+GlJY15nX6lY3NmJl" target="_blank" class="value">波波會館🇹🇼本土台灣娛樂優選</a>
+                </div>
+                <div class="contact-item">
+                    <span class="label">電話:</span>
+                    <a href="tel:0909079473" class="value">0909079473</a>
+                </div>
+            </div>
+        </div>
+        <p class="copyright">&copy; 2025 波波舒壓會館. 台北中山區五木半套按摩推薦。</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // 燈箱控制
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+
+        function openModal(src) {
+            modal.style.display = "block";
+            modalImg.src = src;
+        }
+
+        function closeModal() {
+            modal.style.display = "none";
+        }
+
+        modal.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
