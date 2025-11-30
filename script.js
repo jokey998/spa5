@@ -1,4 +1,3 @@
-
 document.addEventListener('DOMContentLoaded', () => {
     // 元素參照
     const scheduleTableBody = document.querySelector('#schedule-table tbody');
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 全域變數
     let allGirlsData = [];
-    let currentMode = 'today'; // 'today' 或 'all'
+    let currentMode = 'all'; // 目前僅使用「全部班表」模式
     let activeTags = []; // 已選取的標籤
 
     // 可用的標籤列表 (可從資料自動生成，這裡先列出常用)
@@ -38,9 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .then(data => {
                     allGirlsData = data;
-                    renderSchedule(); // 初始渲染
-                    // 初始狀態下如果是 'today'，停用星期篩選
-                    updateFilterState();
+                    // 一律以「全部班表」模式顯示
+                    switchTab('all');
                 })
                 .catch(error => {
                     console.error('Fetch error:', error);
@@ -83,17 +81,11 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateFilterState() {
         if (!filterDay) return;
         
-        if (currentMode === 'today') {
-            filterDay.disabled = true;
-            filterDay.style.opacity = '0.5';
-            filterDay.style.cursor = 'not-allowed';
-            filterDay.title = "今日模式下無法篩選星期";
-        } else {
-            filterDay.disabled = false;
-            filterDay.style.opacity = '1';
-            filterDay.style.cursor = 'pointer';
-            filterDay.title = "";
-        }
+        // 現在只保留「全部班表」邏輯，星期篩選永遠可用
+        filterDay.disabled = false;
+        filterDay.style.opacity = '1';
+        filterDay.style.cursor = 'pointer';
+        filterDay.title = "";
     }
 
     function renderTagFilters() {
@@ -137,25 +129,20 @@ document.addEventListener('DOMContentLoaded', () => {
         return dayNames[date.getDay()];
     }
 
+    // ★ 已改成「只有全部班表」邏輯，不再特別只顯示今日
     function renderSchedule() {
         if (!allGirlsData || allGirlsData.length === 0) return;
 
-        const today = getTodayChineseDay();
         const searchTerm = searchInput ? searchInput.value.trim().toLowerCase() : '';
         const selectedDay = filterDay ? filterDay.value : 'all';
 
-        // 1. 篩選資料
+        // 1. 篩選資料（只保留全部班表邏輯）
         let filteredList = allGirlsData.filter(person => {
             let isMatch = true;
 
-            // 模式篩選 (今日 vs 全部)
-            if (currentMode === 'today') {
-                if (!person.schedule || !person.schedule[today]) isMatch = false;
-            } else {
-                // 全部模式下，如果有選特定星期
-                if (selectedDay !== 'all') {
-                    if (!person.schedule || !person.schedule[selectedDay]) isMatch = false;
-                }
+            // 只在選擇特定星期時，檢查該天是否有班
+            if (selectedDay !== 'all') {
+                if (!person.schedule || !person.schedule[selectedDay]) isMatch = false;
             }
 
             // 名字搜尋
@@ -175,10 +162,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 2. 更新標題
         if (todayTitle) {
-            if (currentMode === 'today') {
-                todayTitle.textContent = `📅 今日 (${today}) 上班美容師`;
-            } else {
+            if (selectedDay === 'all') {
                 todayTitle.textContent = `📋 全部美容師班表`;
+            } else {
+                todayTitle.textContent = `📋 ${selectedDay} 有上班的美容師`;
             }
         }
 
@@ -198,20 +185,17 @@ document.addEventListener('DOMContentLoaded', () => {
             filteredList.forEach(person => {
                 const tr = document.createElement('tr');
                 const priceDisplay = person.price ? `$${person.price}` : "請詢問";
-                
+
                 // 決定顯示的時間內容
                 let workTimeDisplay = '';
-                if (currentMode === 'today') {
-                    workTimeDisplay = person.schedule[today];
+                if (selectedDay !== 'all') {
+                    workTimeDisplay = (person.schedule && person.schedule[selectedDay]) ? person.schedule[selectedDay] : '暫無班表';
                 } else {
-                    // 全部模式：顯示有上班的星期，或者如果選了特定星期則顯示該時間
-                    if (selectedDay !== 'all') {
-                        workTimeDisplay = person.schedule[selectedDay];
-                    } else {
-                        // 顯示所有有班的星期 (簡寫)
+                    if (person.schedule) {
                         const days = Object.keys(person.schedule).map(d => d.replace('星期', ''));
-                        workTimeDisplay = days.join(', ');
-                        if(!workTimeDisplay) workTimeDisplay = "暫無班表";
+                        workTimeDisplay = days.length ? days.join(', ') : '暫無班表';
+                    } else {
+                        workTimeDisplay = '暫無班表';
                     }
                 }
 
@@ -284,3 +268,4 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
+
